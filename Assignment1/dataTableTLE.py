@@ -32,12 +32,27 @@ def spaceTrackApiCall(stq: SpaceTrackClient, rows: list[dict]) -> None:
     # using Space-Track
 
     # making country codes ISO-2 standard for emoji flags
-    country_map  = {
-        "US": "US", "USA": "US",
-        "JPN": "JP",
-        "PRC": "CN",
-        "CIS": "RU", "RUS": "RU",
-        "UK": "GB",
+    country_map = {
+        "US": "US",  # United States
+        "USA": "US",
+        "RUS": "RU",  # Russia
+        "CIS": "RU",
+        "PRC": "CN",  # China
+        "CHN": "CN",
+        "JPN": "JP",  # Japan
+        "IND": "IN",  # India
+        "ESA": None,  # European Space Agency
+        "UK": "GB",  # United Kingdom
+        "FRA": "FR",  # France
+        "DEU": "DE",  # Germany
+        "CAN": "CA",  # Canada
+        "ITA": "IT",  # Italy
+        "ESP": "ES",  # Spain
+        "BRA": "BR",  # Brazil
+        "ISR": "IL",  # Israel
+        "IRN": "IR",  # Iran
+        "KOR": "KR",  # South Korea
+        "AUS": "AU",  # Australia
     }
 
     # Collect NORAD IDs from TLEs.txt file
@@ -48,7 +63,7 @@ def spaceTrackApiCall(stq: SpaceTrackClient, rows: list[dict]) -> None:
     # Single batch SATCAT query from space-track.org
     records = stq.satcat(norad_cat_id=norad_ids, format="json")
 
-    # Normalize Space-Track response to a list[dict].
+    # Normalize Space-Track response to a dictionary list
     # Depending on spacetrack package version, json format may return a JSON string. --> processed differently
     if isinstance(records, str):
         try:
