@@ -6,7 +6,7 @@ vs. Communication Link Reliability (p_link)
 Two governance regimes: No-Notice | NOTLO (Notice to Lunar Operators)
 
 Authors: Clara Poitevin, Jalen Cauley, Dylan Gantt,
-         Erik Goeke, Waleed Sadiq, Rut Santana
+         Erik Goeke, Waleed Sadiq, Rut Santana, Claude/GPT
 INTA 4803/8803 - Space Sustainability, Georgia Tech
 April 2026
 
@@ -463,12 +463,12 @@ def make_combined_hazard_figure(all_case_results, outfile="plot1_hazard_exposure
     for ax in axes:
         ax.set_ylabel("Fraction of runs with ≥1\ndust/plume hazard exposure", fontsize=9.5)
     axes[-1].legend(fontsize=8.5, loc="upper right", framealpha=0.9)
-
-    fig.suptitle(
-        "Plot 1A – Hazard Exposure Rate Across Operational Density Cases",
-        fontsize=12,
-        fontweight="bold",
-    )
+    # Comment out graph title
+    # fig.suptitle(
+    #     "Plot 1A – Hazard Exposure Rate Across Operational Density Cases",
+    #     fontsize=12,
+    #     fontweight="bold",
+    # )
     plt.savefig(outfile, dpi=180, bbox_inches="tight")
     print(f"Saved: {outfile}")
     plt.show()
@@ -529,11 +529,13 @@ def make_combined_delay_figure(all_case_results, outfile="plot1_safety_burden_al
         ax.set_ylabel("Mean operator delay (min)", fontsize=9.5)
     axes[-1].legend(fontsize=8.5, loc="upper right", framealpha=0.9)
 
-    fig.suptitle(
-        "Plot 1B – Safety vs. Burden Across Operational Density Cases",
-        fontsize=12,
-        fontweight="bold",
-    )
+    # COMMENTED OUT GRAPH TITLE
+    # fig.suptitle(
+    #     "Plot 1B – Safety vs. Burden Across Operational Density Cases",
+    #     fontsize=12,
+    #     fontweight="bold",
+    # )
+
     plt.savefig(outfile, dpi=180, bbox_inches="tight")
     print(f"Saved: {outfile}")
     plt.show()

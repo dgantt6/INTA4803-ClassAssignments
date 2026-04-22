@@ -1,5 +1,10 @@
 ﻿"""Generate NOTLO (Notice to Lunar Operators) visualizations for the lunar south pole.
 
+Authors: Clara Poitevin, Jalen Cauley, Dylan Gantt,
+         Erik Goeke, Waleed Sadiq, Rut Santana, Claude/GPT
+INTA 4803/8803 - Space Sustainability, Georgia Tech
+April 2026
+
 This script downloads basemap imagery (and, for the corridor example, a numeric DEM)
 from the LROC QuickMap WMS and produces two-panel figures intended for classroom
 discussion of operational coordination:
@@ -205,92 +210,92 @@ def _draw_traverse_line(ax: plt.Axes, pts_km: list[tuple[float, float]], style: 
     ys = [p[1] for p in pts_km]
     ax.plot(xs, ys, **style)
 
-
-def _add_notlo_box(
-    ax: plt.Axes,
-    lines: list[str],
-    *,
-    xy_axes: tuple[float, float] = (0.02, 0.02),
-    ha: str = "left",
-    va: str = "bottom",
-) -> None:
-    """Add a NOTLO metadata textbox anchored in axes coordinates.
-
-    This places the text *on top of the map* (inside the axes). It is useful
-    when there is guaranteed empty map space, but it can obscure features if the
-    map is dense.
-
-    Args:
-        ax: Axes to annotate.
-        lines: List of text lines to render.
-        xy_axes: Anchor location in axes-fraction coordinates `(x, y)`.
-        ha: Horizontal alignment.
-        va: Vertical alignment.
-
-    See also:
-        `_add_notlo_box_figure` for placing metadata in figure whitespace to
-        guarantee no overlap with map features.
-    """
-
-    x, y = xy_axes
-    ax.text(
-        x,
-        y,
-        "\n".join(lines),
-        transform=ax.transAxes,
-        va=va,
-        ha=ha,
-        fontsize=11,
-        color="white",
-        bbox={
-            "boxstyle": "round,pad=0.35",
-            "facecolor": "black",
-            "alpha": 0.65,
-            "edgecolor": "none",
-        },
-    )
-
-
-def _add_notlo_box_figure(
-    fig: plt.Figure,
-    lines: list[str],
-    *,
-    xy_fig: tuple[float, float] = (0.98, 0.06),
-    ha: str = "right",
-    va: str = "bottom",
-) -> None:
-    """Add a NOTLO metadata textbox anchored in figure coordinates.
-
-    This places the text in *figure whitespace* (outside the map axes). It is
-    the preferred option when you need to guarantee that labels/craters on the
-    basemap are never covered by the metadata.
-
-    Args:
-        fig: The Matplotlib figure.
-        lines: List of text lines to render.
-        xy_fig: Anchor location in figure-fraction coordinates `(x, y)`.
-        ha: Horizontal alignment.
-        va: Vertical alignment.
-    """
-
-    x, y = xy_fig
-    fig.text(
-        x,
-        y,
-        "\n".join(lines),
-        transform=fig.transFigure,
-        va=va,
-        ha=ha,
-        fontsize=11,
-        linespacing=1.0,
-        color="white",
-        bbox={
-            "boxstyle": "round,pad=0.30",
-            "facecolor": "black",
-            "alpha": 0.65,
-            "edgecolor": "none",
-        },
-    )
+# COMMENTED OUT NOTLO BOX
+# def _add_notlo_box(
+#     ax: plt.Axes,
+#     lines: list[str],
+#     *,
+#     xy_axes: tuple[float, float] = (0.02, 0.02),
+#     ha: str = "left",
+#     va: str = "bottom",
+# ) -> None:
+#     """Add a NOTLO metadata textbox anchored in axes coordinates.
+#
+#     This places the text *on top of the map* (inside the axes). It is useful
+#     when there is guaranteed empty map space, but it can obscure features if the
+#     map is dense.
+#
+#     Args:
+#         ax: Axes to annotate.
+#         lines: List of text lines to render.
+#         xy_axes: Anchor location in axes-fraction coordinates `(x, y)`.
+#         ha: Horizontal alignment.
+#         va: Vertical alignment.
+#
+#     See also:
+#         `_add_notlo_box_figure` for placing metadata in figure whitespace to
+#         guarantee no overlap with map features.
+#     """
+#
+#     x, y = xy_axes
+#     ax.text(
+#         x,
+#         y,
+#         "\n".join(lines),
+#         transform=ax.transAxes,
+#         va=va,
+#         ha=ha,
+#         fontsize=11,
+#         color="white",
+#         bbox={
+#             "boxstyle": "round,pad=0.35",
+#             "facecolor": "black",
+#             "alpha": 0.65,
+#             "edgecolor": "none",
+#         },
+#     )
+#
+#
+# def _add_notlo_box_figure(
+#     fig: plt.Figure,
+#     lines: list[str],
+#     *,
+#     xy_fig: tuple[float, float] = (0.98, 0.06),
+#     ha: str = "right",
+#     va: str = "bottom",
+# ) -> None:
+#     """Add a NOTLO metadata textbox anchored in figure coordinates.
+#
+#     This places the text in *figure whitespace* (outside the map axes). It is
+#     the preferred option when you need to guarantee that labels/craters on the
+#     basemap are never covered by the metadata.
+#
+#     Args:
+#         fig: The Matplotlib figure.
+#         lines: List of text lines to render.
+#         xy_fig: Anchor location in figure-fraction coordinates `(x, y)`.
+#         ha: Horizontal alignment.
+#         va: Vertical alignment.
+#     """
+#
+#     x, y = xy_fig
+#     fig.text(
+#         x,
+#         y,
+#         "\n".join(lines),
+#         transform=fig.transFigure,
+#         va=va,
+#         ha=ha,
+#         fontsize=11,
+#         linespacing=1.0,
+#         color="white",
+#         bbox={
+#             "boxstyle": "round,pad=0.30",
+#             "facecolor": "black",
+#             "alpha": 0.65,
+#             "edgecolor": "none",
+#         },
+#     )
 
 
 def _add_scale_bar(ax: plt.Axes, length_km: float = 10.0) -> None:
@@ -923,9 +928,9 @@ def make_two_panel_notlo_figure(
     # Notional plume hazard footprints (illustrative, not calibrated).
     radii_km = [2.0, 5.0, 3.0]
     phase_labels = [
-        "Approach/Descent (T−10 min → T0)",
-        "Touchdown/Peak (T0 → T+10 min)",
-        "Post-landing (T+10 min → T+2 hr)",
+        "Approach/Descent: 2 km radius",
+        "Touchdown/Peak: 5 km radius",
+        "Post-landing: 3 km radius",
     ]
     styles = [
         {"ec": "#ffcc80", "lw": 2.0, "ls": "--", "alpha": 0.95},
@@ -1001,7 +1006,7 @@ def make_two_panel_notlo_figure(
     labels += [
         "Traverse (no notice): Rover crosses hazard",
         "Traverse (NOTLO): Rover avoids hazard",
-        "Lander site",
+        "Lander site: 2 hr effective window",
     ]
 
     fig.legend(
@@ -1011,55 +1016,58 @@ def make_two_panel_notlo_figure(
         ncol=2,
         frameon=False,
         fontsize=11,
-        bbox_to_anchor=(0.02, 0.04),
+        bbox_to_anchor=(0.1, 0.02),
     )
-
-    # NOTLO "header" fields box.
-    if notlo_box_lines is None:
-        notlo_box_lines = [
-            "NOTLO (illustrative)",
-            "Area: South pole region (example)",
-            "Access: Nearby PSRs",
-            "T0: Touchdown",
-            "Window: T−10 min → T+2 hr",
-            "Max radius: 5 km (peak)",
-            "Contact: Mission ops/registry",
-        ]
-    if notlo_box_xy_fig is None:
-        _add_notlo_box(
-            axes[1],
-            notlo_box_lines,
-            xy_axes=notlo_box_xy_axes,
-            ha=notlo_box_ha,
-            va=notlo_box_va,
-        )
-    else:
-        # Place the metadata in figure whitespace so it cannot obscure map features
-        # (e.g., the Shackleton crater annotation).
-        _add_notlo_box_figure(
-            fig,
-            notlo_box_lines,
-            xy_fig=notlo_box_xy_fig,
-            ha=notlo_box_fig_ha,
-            va=notlo_box_fig_va,
-        )
+    # commented out NOTLO BOX
+    # # NOTLO "header" fields box.
+    # if notlo_box_lines is None:
+    #     notlo_box_lines = [
+    #         "NOTLO (illustrative)",
+    #         "Area: South pole region (example)",
+    #         "Access: Nearby PSRs",
+    #         "T0: Touchdown",
+    #         "Window: T−10 min → T+2 hr",
+    #         "Max radius: 5 km (peak)",
+    #         "Contact: Mission ops/registry",
+    #     ]
+    # COMMENTED OUT NOTLO BOX
+    # if notlo_box_xy_fig is None:
+    #
+    #     # _add_notlo_box(
+    #     #     axes[1],
+    #     #     notlo_box_lines,
+    #     #     xy_axes=notlo_box_xy_axes,
+    #     #     ha=notlo_box_ha,
+    #     #     va=notlo_box_va,
+    #     # )
+    # else:
+    #     # Place the metadata in figure whitespace so it cannot obscure map features
+    #     # (e.g., the Shackleton crater annotation).
+    #     _add_notlo_box_figure(
+    #         fig,
+    #         notlo_box_lines,
+    #         xy_fig=notlo_box_xy_fig,
+    #         ha=notlo_box_fig_ha,
+    #         va=notlo_box_fig_va,
+    #     )
 
     # Scale bar on both panels.
     for ax in axes:
         _add_scale_bar(ax, length_km=10)
 
-    # Basemap credit.
-    fig.text(
-        0.01,
-        0.985,
-        "Basemap: LROC WAC South Pole Summer Mosaic (via LROC QuickMap WMS)",
-        ha="left",
-        va="top",
-        fontsize=10,
-        color="#444444",
-    )
-
-    fig.subplots_adjust(left=0.02, right=0.98, top=0.90, bottom=0.24, wspace=0.02)
+    # Commented out basemap credit
+    # # Basemap credit.
+    # fig.text(
+    #     0.01,
+    #     0.985,
+    #     "Basemap: LROC WAC South Pole Summer Mosaic (via LROC QuickMap WMS)",
+    #     ha="left",
+    #     va="top",
+    #     fontsize=10,
+    #     color="#444444",
+    # )
+    #
+    fig.subplots_adjust(left=0.005, right=0.995, top=0.90, bottom=0.24, wspace=0.02)
 
     out_png.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out_png, dpi=300)
@@ -1142,17 +1150,18 @@ def main() -> None:
         context_target_xy_km=(7.0, -7.0),
         baseline_traverse_pts_km=baseline_traverse_a,
         notlo_traverse_pts_km=notlo_traverse_a,
-        notlo_box_lines=[
-            "NOTLO (illustrative)",
-            "Area: Shackleton ridge (S pole)",
-            "Reference time: T0 = touchdown",
-            "Window: T−10 min → T+2 hr",
-            "Max radius: 5 km (peak)",
-            "Contact: mission ops / registry",
-        ],
-        notlo_box_xy_fig=(0.98, 0.01),
-        notlo_box_fig_ha="right",
-        notlo_box_fig_va="bottom",
+        # COMMENTED OUT NOTLO BOX
+        # notlo_box_lines=[
+        #     "NOTLO (illustrative)",
+        #     "Area: Shackleton ridge (S pole)",
+        #     "Reference time: T0 = touchdown",
+        #     "Window: T−10 min → T+2 hr",
+        #     "Max radius: 5 km (peak)",
+        #     "Contact: mission ops / registry",
+        # ],
+        # notlo_box_xy_fig=(0.98, 0.01),
+        # notlo_box_fig_ha="right",
+        # notlo_box_fig_va="bottom",
     )
 
     # FIGURE B: Alternate south-pole corridor example (traverse does not cross a major crater).
@@ -1204,19 +1213,20 @@ def main() -> None:
         context_target_xy_km=(7.0, -7.0),
         baseline_traverse_pts_km=baseline_traverse_b,
         notlo_traverse_pts_km=notlo_traverse_b,
-        notlo_box_lines=[
-            "NOTLO (illustrative)",
-            "Area: S pole sunlit ridge corridor",
-            "Reference time: T0 = touchdown",
-            "Window: T−10 min → T+2 hr",
-            "Max radius: 5 km (peak)",
-            "Contact: mission ops / registry",
-        ],
+        # commented out notlo box
+        # notlo_box_lines=[
+        #     "NOTLO (illustrative)",
+        #     "Area: S pole sunlit ridge corridor",
+        #     "Reference time: T0 = touchdown",
+        #     "Window: T−10 min → T+2 hr",
+        #     "Max radius: 5 km (peak)",
+        #     "Contact: mission ops / registry",
+        # ],
         # Put metadata in bottom figure whitespace so it cannot cover Shackleton...
         # Not sure if we like it here or prefer it in the axes. Can adjust as needed.
-        notlo_box_xy_fig=(0.98, 0.01),
-        notlo_box_fig_ha="right",
-        notlo_box_fig_va="bottom",
+        # notlo_box_xy_fig=(0.98, 0.01),
+        # notlo_box_fig_ha="right",
+        # notlo_box_fig_va="bottom",
     )
 
 
